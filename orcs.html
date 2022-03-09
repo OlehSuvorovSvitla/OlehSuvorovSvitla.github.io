@@ -1,0 +1,171 @@
+<!doctype html>
+<!--suppress ALL -->
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title>Orcs stats</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <meta name="theme-color" content="#fafafa">
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css"
+        integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
+          integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+          crossorigin="anonymous"></script>
+  <style>
+    body {
+      background: url("img/bg.png");
+    }
+
+    .bg-info {
+      background: #17a2b8;
+    }
+
+    .bg-warning {
+      background: #ffc107;
+    }
+
+    .bg-danger {
+      background: #dc3545;
+    }
+
+    img {
+      width: 100px;
+    }
+
+    .circle {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+
+    .progress {
+      margin-bottom: 0;
+    }
+
+    .list-group {
+      margin-bottom: 0;
+    }
+
+    h3 span {
+      color: gray;
+      font-size: medium;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Orcs stats / Статистика орків</div>
+
+    <!-- List group -->
+    <span id="insert"></span>
+  </div>
+</div>
+
+<script>
+  const data = {
+    come: 190000,
+    dead: {
+      total: 12635,
+      date: '09.03.2022',
+      source: 'https://www.facebook.com/bryhynets/posts/5102876963110257',
+    },
+    prisoned: {
+      total: 3000,
+      date: '09.03.2022',
+      source: 'https://www.facebook.com/bryhynets/posts/5102876963110257',
+    },
+    injured: {
+      total: 35000,
+      date: '09.03.2022',
+      source: 'https://www.facebook.com/bryhynets/posts/5102876963110257',
+    }
+  }
+
+  const left = data.come - data.dead.total - data.prisoned.total - data.injured.total;
+  const getPercentage = (value) => (value / data.come * 100).toFixed(0);
+
+  const list = `
+  <ul class="list-group">
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-xs-12">
+            <h5>Come / Приперлось:</h5>
+            <img src="img/come.png" alt="come">
+            <h3 id="come"><b>${data.come}</b></h3>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-xs-4">
+            <h5><span class="circle bg-danger"></span>Dead / Подохло:</h5>
+            <img src="img/dead.png" alt="dead">
+            <h3 id="dead"><b>${data.dead.total}</b> <span>(${getPercentage(data.dead.total)}%)</span></h3>
+            <p>${data.dead.date} • <a href="${data.dead.source}" target="_blank">Source</a></p>
+          </div>
+          <div class="col-xs-4">
+            <h5><span class="circle bg-warning"></span>Injured / Покоцано:</h5>
+            <img src="img/injured.png" alt="injured">
+            <h3 id="injured"><b>${data.injured.total}</b> <span>(${getPercentage(data.injured.total)}%)</span></h3>
+            <p>${data.injured.date} • <a href="${data.injured.source}" target="_blank">Source</a></p>
+          </div>
+          <div class="col-xs-4">
+            <h5><span class="circle bg-info"></span>Prisoned / Полонено:</h5>
+            <img src="img/prisoned.png" alt="prisoned">
+            <h3 id="prisoned"><b>${data.prisoned.total}</b> <span>(${getPercentage(data.prisoned.total)}%)</span></h3>
+            <p>${data.prisoned.date} • <a href="${data.prisoned.source}" target="_blank">Source</a></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="progress">
+              <div style="width: ${getPercentage(data.dead.total)}%" class="progress-bar bg-danger" id="progress-injured" role="progressbar"></div>
+              <div style="width: ${getPercentage(data.prisoned.total)}%" class="progress-bar bg-warning" id="progress-prisoned" role="progressbar"></div>
+              <div style="width: ${getPercentage(data.injured.total)}%" class="progress-bar bg-info" id="progress-dead" role="progressbar"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-xs-12">
+            <h5>Left / Недобито:</h5>
+            <img src="img/orc.png" alt="orc">
+            <h3 id="left"><b>${left}</b> <span>(${getPercentage(left)}%)</span></h3>
+          </div>
+        </div>
+      </li>
+    </ul>
+    `
+
+  document.getElementById('insert').innerHTML = list;
+</script>
+
+</body>
+</html>
